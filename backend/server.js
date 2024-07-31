@@ -5,6 +5,7 @@ import FoodRoutes from "./routes/Foods.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
 import AuthFoodRoutes from "./routes/AuthFood.js";
 import Authenticate from './middleware/authMiddleware.js';
+import FoodTrackRoutes from "./routes/Tracks.js";
 
 import cors from 'cors'
 const app = express();
@@ -18,6 +19,7 @@ app.use('/Food',FoodRoutes)
 // Use authentication routes
 app.use('/Account', AuthRoutes);
 app.use('/Auth/food',Authenticate, AuthFoodRoutes);
+app.use('/FoodTrack',Authenticate, FoodTrackRoutes);
 
 app.listen(7000, () => {
   console.log("Server is running on port 7000");
