@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/User.js';
-
+import env from "dotenv";
+env.config()
 // Secret key for JWT
 const JWT_SECRET = process.env.JWT_SECRET_KEY; 
 

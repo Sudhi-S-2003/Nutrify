@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import env from "dotenv";
 import FoodRoutes from "./routes/Foods.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
+import AuthFoodRoutes from "./routes/AuthFood.js";
+import Authenticate from './middleware/authMiddleware.js';
+
 import cors from 'cors'
 const app = express();
 env.config()
@@ -14,6 +17,7 @@ app.get("/", (req, res) => {
 app.use('/Food',FoodRoutes)
 // Use authentication routes
 app.use('/Account', AuthRoutes);
+app.use('/Auth/food',Authenticate, AuthFoodRoutes);
 
 app.listen(7000, () => {
   console.log("Server is running on port 7000");
