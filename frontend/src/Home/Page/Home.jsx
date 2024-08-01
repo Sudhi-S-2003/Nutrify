@@ -2,6 +2,7 @@ import React from 'react'
 
 import Banner from '../Banner'
 import Healthy from '../Healthy'
+import Contact from '../Contact'
 
 
 function Home() {
@@ -10,7 +11,7 @@ function Home() {
 
       <Banner/>
       <Healthy/>
-     
+      <Contact/>
     </div>
   )
 }

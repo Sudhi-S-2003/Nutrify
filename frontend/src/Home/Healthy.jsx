@@ -10,7 +10,7 @@ function Healthy() {
         <h1 className="text-4xl font-bold">Why Healthy</h1>
       </div>
 
-      <div className="flex justify-evenly items-center">
+      <div className="sm:flex  justify-evenly items-center">
         <div>
           <ul className="space-y-6">
             <li className="flex items-center">
@@ -40,17 +40,17 @@ function Healthy() {
           </ul>
         </div>
         <div>
-          <div className="flex items-end">
-          <img src={rect1} alt="img1" className="h-[240px]"/>
-          <img src={rect2} alt="img2"className="h-[380px]" />
+          <div className="sm:flex items-end">
+          <img src={rect1} alt="img1" className="sm:h-[240px]"/>
+          <img src={rect2} alt="img2"className="sm:h-[380px]" />
           </div>
          
-          <img src={rect3} alt="img3" className="h-[180px]"/>
+          <img src={rect3} alt="img3" className="sm:h-[180px]"/>
         </div>
       </div>
       <div className="w-[100vw] h-[2px] my-3 border border-dashed "></div>
-      <div className="flex justify-between items-center text-center mt-4">
-        <div className="w-[50%]">
+      <div className="sm:flex justify-between items-center text-center mt-4">
+        <div className="sm:w-[50%] min-h-[50vh] sm:min-h-0">
           <h1 className="text-5xl text-green-500 mb-5">Well done</h1>
           <h3 className="text-xl">Get started to a healthy lifestyle...</h3>
         </div>

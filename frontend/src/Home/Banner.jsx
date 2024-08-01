@@ -2,9 +2,9 @@ import React from 'react'
 import frontimg from '../assets/frontimg.png'
 function Banner() {
   return (
-    <div className='flex justify-evenly mt-4 items-center'>
-        <div className='text-center'>
-            <h1 className='text-4xl font-bold'>
+    <div className='sm:flex justify-evenly mt-4 items-center'>
+        <div className='text-center min-h-[50vh] sm:min-h-0'>
+            <h1 className='text-4xl font-bold '>
                 Welcome to Nutrify Website
             </h1>
             <h3>Healthy living  Made easy!!</h3>
@@ -13,7 +13,7 @@ function Banner() {
             
         </div>
         <div className="">
-            <img src={frontimg} alt="frontimg" className='h-[55vh]' />
+            <img src={frontimg} alt="frontimg" className='h-[55vh] block m-auto' />
         </div>
       
     </div>
