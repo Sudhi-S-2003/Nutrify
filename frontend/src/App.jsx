@@ -1,8 +1,19 @@
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import HomeRouter from './Routes/HomeRouter'
+import DashboardRouter from './Routes/DashboardRouter'
 
-function App() {
+export default function App() {
   return (
-    <div>App</div>
+    <>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/*" element={<HomeRouter />}  />
+      <Route path="/dashboard/*" element={<DashboardRouter />} />
+      </Routes>
+      </BrowserRouter>
+    
+        </>
+   
+   
   )
 }
-
-export default App
