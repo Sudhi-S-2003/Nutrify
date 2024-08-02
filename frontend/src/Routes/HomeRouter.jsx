@@ -5,6 +5,8 @@ import Navbar from '../Home/Navbar'
 import Footer from '../Home/Footer'
 import About from '../Home/Page/About'
 import Contact from '../Home/Contact'
+import Login from '../Home/Page/Login'
+import Signup from '../Home/Page/Signup'
 function HomeRouter() {
   return (
     <>
@@ -15,6 +17,10 @@ function HomeRouter() {
             <Route path="Contact" element={<Contact />} />
             <Route path="About" element={<About />} />
             <Route path="Foods" element={<Food />} />
+            <Route path="Login" element={<Login />} />
+            <Route path="Signup" element={<Signup/>} />
+
+            
             
             <Route path='*'/>
         </Routes>

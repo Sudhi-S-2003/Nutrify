@@ -4,11 +4,17 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { useState } from "react";
 import { Link } from 'react-router-dom'
 function Navbar() {
-  const [darkMode, setDarkMode] = useState(false);
+  const getInitialTheme = () => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  };
+  const [darkMode, setDarkMode] = useState(getInitialTheme);
   const [isOpen, setIsOpen] = useState(false);
   const toggleTheme = () => {
-    const newTheme = darkMode ? 'light' : 'dark';
-    setDarkMode(!darkMode);
+    const newTheme = darkMode==="dark" ? 'light' : 'dark';
+    setDarkMode(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
   };
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -24,14 +30,14 @@ function Navbar() {
       </div>
       <div className="flex gap-3 items-center">
       <button onClick={toggleTheme} className="p-2">
-          {darkMode ? (
+          {darkMode === "dark"  ? (
             <IoSunnyOutline size={20} />
           ) : (
             <FaRegMoon size={20} />
           )}
         </button>
-        <button>Login</button>
-        <a href="">Sign up</a>
+       <Link to="/Login"> <button >Login</button></Link>
+        <Link to="/Signup">Sign up</Link>
         <button onClick={toggleMenu} className="sm:hidden p-2">
             {/* Add a hamburger icon here */}
             &#9776;
