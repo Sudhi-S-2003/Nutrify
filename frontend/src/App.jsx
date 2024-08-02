@@ -1,6 +1,6 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import HomeRouter from './Routes/HomeRouter'
-import DashboardRouter from './Routes/DashboardRouter'
+import AuthRouter from './Routes/AuthRouter'
 
 export default function App() {
   return (
@@ -8,7 +8,8 @@ export default function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/*" element={<HomeRouter />}  />
-      <Route path="/dashboard/*" element={<DashboardRouter />} />
+      <Route path="/Auth/*" element={<AuthRouter />} />
+   
       </Routes>
       </BrowserRouter>
     
