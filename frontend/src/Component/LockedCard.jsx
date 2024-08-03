@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function LockedCard() {
+function LockedCard({data}) {
   return (
     <div className="card card-side bg-base-100 max-w-[500px] shadow-xl">
       <figure>
         <img
-          src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+          src={data.image}
           alt="Movie"
         />
       </figure>

@@ -1,6 +1,36 @@
 import React from 'react'
+import List from './List'
 
-function FilterSearch() {
+function FilterSearch({data, setFilterData}) {
+  const [searchData, setSearchData] = React.useState('')
+  const [category, setCategory] = React.useState([]);
+
+  React.useEffect(() => {
+    const categorySet = new Set(data.map(item => item.Category));
+    setCategory(Array.from(categorySet));
+    console.log(Array.from(categorySet));
+  }, [data]);
+//search change handler
+  function changeHandler(e) {
+    const query = e.target.value.toLowerCase();
+    if (query) {
+      const filteredData = data.filter(item =>{
+        // console.log(item.Food);
+        return item.Food.toLowerCase().includes(query.toLowerCase())
+      }
+      );
+      setSearchData(filteredData);
+    } else {
+      setSearchData([]);
+    }
+    }
+  //catgerogy change handler
+  function handlecategory(e){
+    const selectedCategory = e.target.value;
+    // console.log(selectedCategory)
+    const filteredData = data.filter(item => item.Category === selectedCategory);
+    setFilterData(filteredData)
+  }
   return (
     <>
     {/* Page Heading */}
@@ -13,8 +43,9 @@ function FilterSearch() {
 
   {/* Search and Filter Section */}
   <div className="flex flex-col sm:flex-row justify-evenly items-center p-3">
+    <div className='relative'>
     <label className="input input-bordered flex items-center gap-2 w-full m-3 max-w-[300px]">
-      <input type="text" className="grow" placeholder="Search" />
+      <input type="text" className="grow" placeholder="Search" onChange={changeHandler}/>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -27,14 +58,25 @@ function FilterSearch() {
           clipRule="evenodd"
         />
       </svg>
+      
     </label>
-    <select className="select select-bordered w-full max-w-[300px]">
+       {/* Search Recommendations */}      
+       {
+        searchData && <List searchData={searchData}/>
+       }    
+
+
+    </div>
+    
+    <select className="select select-bordered w-full max-w-[300px]" onChange={handlecategory}>
       <option disabled selected>
         Category
       </option>
-      <option>Fruit</option>
-      <option>Large Orange</option>
-      <option>Large Tomato</option>
+      {
+        category.map((category, index) => (
+          <option key={index} value={category}>{category}</option>
+          ))
+      }
     </select>
   </div>
   </>
