@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom"
 function List({searchData}) {
+  const [token, setToken] = useState(localStorage.getItem("token"));
   return (
           
 <ul className="absolute top-14 left-5 right-0 border border-base-300 rounded-lg mt-1 max-h-40 overflow-auto z-10 bg-base-200 shadow-lg">
 {searchData && searchData.length > 0 ? (
         searchData.map((item, index) => (
-           <Link to={"/Login"}>
+           <Link to={!token ? "/Login" : `/Auth/Track/${item._id}`} key={index}>
           <li
             className="p-2 hover:bg-base-300 cursor-pointer flex items-center"
             key={index}
