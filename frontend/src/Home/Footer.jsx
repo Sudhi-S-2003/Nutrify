@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-
+import { useState } from "react";
 function Footer() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
   return (
     <div>
         <footer className="footer footer-center bg-base-200 text-base-content rounded p-10">
@@ -8,7 +9,11 @@ function Footer() {
   <Link to={"/"} className="link link-hover">Home</Link>
     <Link to={'/About'}className="link link-hover">About us</Link>
     <Link to={'/Contact'} className="link link-hover">Contact</Link>
-    <Link to={'Foods'}className="link link-hover">Foods</Link>
+    {token ? (
+            <Link to={"/Auth/Foods"}>Foods</Link>
+          ) : (
+            <Link to={"/Foods"}>Foods</Link>
+          )}
   </nav>
   <nav>
     <div className="grid grid-flow-col gap-4">
