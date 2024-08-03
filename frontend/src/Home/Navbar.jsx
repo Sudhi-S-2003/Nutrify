@@ -44,7 +44,7 @@ function Navbar() {
           </button>
           {token ? (
             <>
-             <Link to="/Auth/Dashboard">
+              <Link to="/Auth/Dashboard">
                 <button aria-label="Dashboard">Dashboard</button>
               </Link>
               <Logout setToken={setToken} />
@@ -81,9 +81,13 @@ function Navbar() {
           <Link to="/Contact" onClick={toggleMenu} className="py-2">
             Contact
           </Link>
-          <Link to="/Foods" onClick={toggleMenu} className="py-2">
-            Foods
-          </Link>
+          {token ? (
+            <Link to="/Auth/Foods" onClick={toggleMenu} className="py-2">
+              Foods
+            </Link>
+          ) : (
+            <Link to={"/Foods"}>Foods</Link>
+          )}
         </div>
       )}
     </div>

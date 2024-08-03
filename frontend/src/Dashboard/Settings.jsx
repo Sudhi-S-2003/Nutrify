@@ -1,16 +1,68 @@
-import React, { useState } from 'react';
-
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import Message from "../Message/Message";
 function Settings() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [profile, setProfile] = React.useState({});
+  const [token, setToken] = React.useState(localStorage.getItem("token"));
+  const [errors, setErrors] = useState({});
 
-  const handleUsernameChange = (e) => setUsername(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:7000/Auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        // console.log(response.data)
+        setProfile(response.data);
+      });
+  }, []);
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!profile.username) {
+      newErrors.username = "Username is required";
+    }
+
+    if (profile.password && profile.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long";
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic (e.g., updating username and password)
-    console.log('Username:', username);
-    console.log('Password:', password);
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    } else {
+      setErrors({});
+    }
+    try {
+      axios
+        .put("http://localhost:7000/Auth/profile", profile, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          Message("success", "Profile updated successfully!");
+          if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
+            setToken(response.data.token);
+          }
+        })
+        .catch((error) => {
+          Message("error", "Error updating profile.");
+          console.error("Error updating profile:", error);
+        });
+    } catch (error) {
+      Message("error", "Error updating profile.");
+    }
   };
 
   return (
@@ -22,7 +74,7 @@ function Settings() {
           <label className="block text-base-content">Name</label>
           <input
             type="text"
-            value="John Doe"
+            value={profile.name}
             disabled
             className="input input-bordered w-full bg-base-200"
           />
@@ -31,7 +83,7 @@ function Settings() {
           <label className="block text-base-content">Email</label>
           <input
             type="email"
-            value="john.doe@example.com"
+            value={profile.email}
             disabled
             className="input input-bordered w-full bg-base-200"
           />
@@ -42,10 +94,9 @@ function Settings() {
           <label className="block text-base-content">Username</label>
           <input
             type="text"
-            value={username}
-            onChange={handleUsernameChange}
+            value={profile.username}
+            disabled
             className="input input-bordered w-full"
-            placeholder="New username"
           />
         </div>
 
@@ -54,18 +105,18 @@ function Settings() {
           <label className="block text-base-content">Password</label>
           <input
             type="password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={profile.password}
+            name="password"
+            onChange={handleChange}
             className="input input-bordered w-full"
             placeholder="New password"
           />
         </div>
+        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="btn btn-primary w-full"
-        >
+        <button type="submit" className="btn btn-primary w-full">
           Save Changes
         </button>
       </form>

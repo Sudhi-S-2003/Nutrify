@@ -8,7 +8,7 @@ function DashboardRouter() {
   const [selectedTab, setSelectedTab] = useState("profile");
 
   return (
-    <div className="flex flex-col lg:flex-row h-[100%]">
+    <div className="flex flex-col lg:flex-row h-[100%] z-10">
       {/* Sidebar Navbar (for large screens) */}
       <div className="lg:w-1/4 w-full bg-base-200 p-4 lg:sticky lg:top-5 lg:h-screen lg:flex lg:flex-col lg:overflow-y-auto pt-20">
         <h2 className="text-xl font-bold mb-4 hidden sm:block">Dashboard</h2>
