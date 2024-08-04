@@ -19,7 +19,7 @@ app.use('/Food',FoodRoutes)
 // Use authentication routes
 app.use('/Account', AuthRoutes);
 app.use('/Auth/food',Authenticate, AuthFoodRoutes);
-app.use('/FoodTrack',Authenticate, FoodTrackRoutes);
+app.use('/Auth/FoodTrack',Authenticate, FoodTrackRoutes);
 app.use("/Auth/Profile", Authenticate, ProfileRoutes);
 
 app.listen(7000, () => {

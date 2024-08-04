@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import  Loading from '../Component/Loading'
+import Loading from "../Component/Loading";
+import Message from "../Message/Message";
 function Track() {
   const { id } = useParams();
   const [token, SetToken] = useState(localStorage.getItem("token"));
@@ -16,7 +17,7 @@ function Track() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         SetFood(response.data);
         setTrack(response.data);
       });
@@ -27,40 +28,72 @@ function Track() {
     console.log(unit);
   }
   const handleAddToDiet = () => {
-    console.log(`Food ID: ${id}, Quantity: ${quantity}`);
+    const data = {
+      foodId: id,
+      quantity: unit.quantity,
+      measure: unit.measure,
+      // Add any other necessary fields here
+    };
+    axios
+      .post("http://localhost:7000/Auth/FoodTrack/track", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        Message("success", response.data.message);
+      })
+      .catch((error) => {
+        Message("error", "Error adding food to diet");
+      });
   };
 
   const handleCalculate = () => {
     if (unit.measure) {
       const measure = parseFloat(unit.measure);
-      const fieldsToUpdate = ['Grams', 'Calories', 'Protein', 'Fat', 'SatFat', 'Fiber', 'Carbs'];
+      const fieldsToUpdate = [
+        "Grams",
+        "Calories",
+        "Protein",
+        "Fat",
+        "SatFat",
+        "Fiber",
+        "Carbs",
+      ];
       const newTrack = { ...track };
-      fieldsToUpdate.forEach(field => {
+      fieldsToUpdate.forEach((field) => {
         if (food[field] !== undefined) {
-          newTrack[field] = (food[field] * measure) || 0;
+          newTrack[field] = food[field] * measure || 0;
         }
       });
-      newTrack.Measure = `${measure} ${food.Measure?.split(' ')[1] || ''}`;
+      newTrack.Measure = `${measure} ${food.Measure?.split(" ")[1] || ""}`;
       setTrack(newTrack);
     }
-    if(unit.quantity){
+    if (unit.quantity) {
       const quantity = parseFloat(unit.quantity);
-      const fieldsToUpdate = [ 'Calories', 'Protein', 'Fat', 'SatFat', 'Fiber', 'Carbs'];
+      const fieldsToUpdate = [
+        "Calories",
+        "Protein",
+        "Fat",
+        "SatFat",
+        "Fiber",
+        "Carbs",
+      ];
       const newTrack = { ...track };
-      fieldsToUpdate.forEach(field => {
+      fieldsToUpdate.forEach((field) => {
         if (food[field] !== undefined) {
-          newTrack[field] = (food[field] * (quantity / (food.Grams || 1))) || 0;
+          newTrack[field] = food[field] * (quantity / (food.Grams || 1)) || 0;
         }
       });
-      newTrack.Grams = quantity
-      newTrack.Measure ="NB"
+      newTrack.Grams = quantity;
+      newTrack.Measure = "NB";
       setTrack(newTrack);
     }
   };
-  if(food.length<=0){
-    return <Loading/>
+  if (food.length <= 0) {
+    return <Loading />;
   }
-
 
   return (
     <div className="container mx-auto p-6 shadow-md">
