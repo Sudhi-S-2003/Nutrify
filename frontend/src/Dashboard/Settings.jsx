@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Message from "../Message/Message";
+import Loading from "../Component/Loading";
 function Settings() {
   const [profile, setProfile] = React.useState({});
   const [token, setToken] = React.useState(localStorage.getItem("token"));
@@ -64,6 +65,10 @@ function Settings() {
       Message("error", "Error updating profile.");
     }
   };
+  if (!profile || Object.keys(profile).length === 0) {
+    return <Loading />;
+  }
+  
 
   return (
     <div className="settings-container p-6 max-w-md mx-auto bg-base-100 shadow-md rounded-lg">
