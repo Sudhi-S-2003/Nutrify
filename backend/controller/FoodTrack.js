@@ -77,7 +77,7 @@ const getFoodTracksByDate = async (req, res) => {
       date: { $gte: startOfDay, $lte: endOfDay },
       userId
     })
-    .populate('userId', '-password')
+    // .populate('userId', '-password')
     .populate('foodId'); // Include food details
 
     res.status(200).json(foodTracks);
